@@ -27,8 +27,8 @@ shinyUI(fluidPage(
 
     # Show a plot of the generated distribution
     mainPanel(
-      h3('Everything'),
-      htmlOutput("timeline"),
+      #h3('Everything'),
+      #htmlOutput("timeline"),
       h3('Daily summary'),
       tableOutput('table2'),
       h3('Detailed summary'),

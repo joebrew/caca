@@ -6,7 +6,6 @@
 #
 
 library(shiny)
-
 source('read_in.R')
 shinyServer(function(input, output) {
   
@@ -15,22 +14,22 @@ shinyServer(function(input, output) {
   })
 
   
-  output$timeline <- renderGvis({
-    
-    z <- df
-    z$duration <- as.character(z$Duration)
-    z$duration[which(z$duration == '0')] <- ''
-    x <- gvisTimeline(data = z,
-                 rowlabel = 'Type',
-                 barlabel = 'duration',
-                 start = 'start',
-                 end = 'end',
-                 options=list(#timeline="{groupByRowLabel:false}",
-                              backgroundColor='#ffd', 
-                              height=350,
-                              colors="['#cbb69d', '#603913', '#c69c6e']"))
-    
-  })
+#   output$timeline <- renderGvis({
+#     
+#     z <- df
+#     z$duration <- as.character(z$Duration)
+#     z$duration[which(z$duration == '0')] <- ''
+#     gvisTimeline(data = z,
+#                  rowlabel = 'type',
+#                  barlabel = 'duration',
+#                  start = 'start',
+#                  end = 'end',
+#                  options=list(#timeline="{groupByRowLabel:false}",
+#                               backgroundColor='#ffd', 
+#                               height=350,
+#                               colors="['#cbb69d', '#603913', '#c69c6e']"))
+#     
+#   })
   
   output$table1 <- renderDataTable({
 
