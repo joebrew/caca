@@ -1,0 +1,16 @@
+{
+    "contents" : "\n# This is the server logic for a Shiny web application.\n# You can find out more about building applications with Shiny here:\n#\n# http://shiny.rstudio.com\n#\n\nlibrary(shiny)\n\nsource('read_in.R')\nshinyServer(function(input, output) {\n  \n  selected <- reactive({\n    df[which(df$type == input$var),]\n  })\n\n  \n  output$timeline <- renderGvis({\n    \n    z <- df\n    z$duration <- as.character(z$Duration)\n    z$duration[which(z$duration == '0')] <- ''\n    x <- gvisTimeline(data = z,\n                 rowlabel = 'Type',\n                 barlabel = 'duration',\n                 start = 'start',\n                 end = 'end',\n                 options=list(#timeline=\"{groupByRowLabel:false}\",\n                              backgroundColor='#ffd', \n                              height=350,\n                              colors=\"['#cbb69d', '#603913', '#c69c6e']\"))\n    \n  })\n  \n  output$table1 <- renderDataTable({\n\n    temp <- selected()\n    temp$Day <- temp$day\n    temp <- temp[,c('Type', \n                   'Day',  \n                   'Time', \n                   'Duration', \n                   'Comment', \n                   'Pump')]\n    temp\n\n  })\n  \n  output$table2 <- renderTable({\n    temp <- selected()\n    temp$Day <- temp$day\n    temp <- temp[,c('Type',\n                    'type',\n                    'Day',  \n                    'Time', \n                    'Duration', \n                    'Comment', \n                    'Pump')]\n    temp <- temp %>%\n      group_by(Day, type) %>%\n      summarise(Minutes = sum(Duration, na.rm = TRUE),\n                Times = n())\n    temp$Day <- as.character(temp$Day)\n    temp\n  }, include.rownames = FALSE)\n\n})\n",
+    "created" : 1433110904474.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "2201217732",
+    "id" : "D328E928",
+    "lastKnownWriteTime" : 1433137656,
+    "path" : "~/Desktop/schedule/server.R",
+    "project_path" : "server.R",
+    "properties" : {
+    },
+    "source_on_save" : false,
+    "type" : "r_source"
+}

@@ -1,0 +1,16 @@
+{
+    "contents" : "\n# This is the user-interface definition of a Shiny web application.\n# You can find out more about building applications with Shiny here:\n#\n# http://shiny.rstudio.com\n#\n\nlibrary(shiny)\n\nshinyUI(fluidPage(\n\n  # Application title\n  titlePanel(\"Ramona Andalucia Brew Farre\"),\n\n  # Sidebar with a slider input for number of bins\n  sidebarLayout(\n    sidebarPanel(\n      selectInput(\"var\",\n                  \"Variable:\",\n                  c('Attempt',\n                    'Caca',\n                    #'Feed from pump',\n                    'Breastfeed',\n                    'Pipi',\n                    'Pump no feed'))\n    ),\n\n    # Show a plot of the generated distribution\n    mainPanel(\n      h3('Everything'),\n      htmlOutput(\"timeline\"),\n      h3('Daily summary'),\n      tableOutput('table2'),\n      h3('Detailed summary'),\n      dataTableOutput(\"table1\")\n    )\n  )\n))\n",
+    "created" : 1433110904338.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "3879377112",
+    "id" : "F1D4DD7F",
+    "lastKnownWriteTime" : 1433137615,
+    "path" : "~/Desktop/schedule/ui.R",
+    "project_path" : "ui.R",
+    "properties" : {
+    },
+    "source_on_save" : false,
+    "type" : "r_source"
+}
