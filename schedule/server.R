@@ -17,11 +17,15 @@ shinyServer(function(input, output) {
   output$timeline <- renderGvis({
     
     z <- df
+    z$lab <- paste0(z$Type, ' ',
+                    ifelse(z$Duration > 0,
+                           paste(z$Duration, 'minutes'),
+                           ''))
     z$duration <- as.character(z$Duration)
     z$duration[which(z$duration == '0')] <- ''
     gvisTimeline(data = z,
                  rowlabel = 'type',
-                 barlabel = 'duration',
+                 barlabel = 'lab',
                  start = 'start',
                  end = 'end',
                  options=list(#timeline="{groupByRowLabel:false}",
@@ -34,6 +38,8 @@ shinyServer(function(input, output) {
   output$table1 <- renderDataTable({
 
     temp <- selected()
+    
+
     temp$Day <- temp$day
     temp <- temp[,c('Type', 
                    'Day',  
@@ -47,6 +53,21 @@ shinyServer(function(input, output) {
   
   output$table2 <- renderTable({
     temp <- selected()
+    
+    # Breastfeed times
+    if(input$var == 'Breastfeed'){
+      temp$apart <- NA
+      for (i in 2:nrow(temp)){
+        temp$apart[i] <- 
+          temp$time3[i] - temp$time3[(i-1)]
+      }
+      
+      # remove those less less than one hour
+      temp <- temp[which(temp$apart >= 1 | is.na(temp$apart)),]
+
+      
+    }
+    
     temp$Day <- temp$day
     temp <- temp[,c('Type',
                     'type',
